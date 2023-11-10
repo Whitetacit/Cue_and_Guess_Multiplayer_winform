@@ -1,0 +1,14 @@
+E:\Project\C#\cue_and_guess_server\cue_and_guess_server\bin\Debug\net6.0\cue_and_guess_server.exe
+E:\Project\C#\cue_and_guess_server\cue_and_guess_server\bin\Debug\net6.0\cue_and_guess_server.deps.json
+E:\Project\C#\cue_and_guess_server\cue_and_guess_server\bin\Debug\net6.0\cue_and_guess_server.runtimeconfig.json
+E:\Project\C#\cue_and_guess_server\cue_and_guess_server\bin\Debug\net6.0\cue_and_guess_server.dll
+E:\Project\C#\cue_and_guess_server\cue_and_guess_server\bin\Debug\net6.0\cue_and_guess_server.pdb
+E:\Project\C#\cue_and_guess_server\cue_and_guess_server\obj\Debug\net6.0\cue_and_guess_server.GeneratedMSBuildEditorConfig.editorconfig
+E:\Project\C#\cue_and_guess_server\cue_and_guess_server\obj\Debug\net6.0\cue_and_guess_server.AssemblyInfoInputs.cache
+E:\Project\C#\cue_and_guess_server\cue_and_guess_server\obj\Debug\net6.0\cue_and_guess_server.AssemblyInfo.cs
+E:\Project\C#\cue_and_guess_server\cue_and_guess_server\obj\Debug\net6.0\cue_and_guess_server.csproj.CoreCompileInputs.cache
+E:\Project\C#\cue_and_guess_server\cue_and_guess_server\obj\Debug\net6.0\cue_and_guess_server.dll
+E:\Project\C#\cue_and_guess_server\cue_and_guess_server\obj\Debug\net6.0\refint\cue_and_guess_server.dll
+E:\Project\C#\cue_and_guess_server\cue_and_guess_server\obj\Debug\net6.0\cue_and_guess_server.pdb
+E:\Project\C#\cue_and_guess_server\cue_and_guess_server\obj\Debug\net6.0\cue_and_guess_server.genruntimeconfig.cache
+E:\Project\C#\cue_and_guess_server\cue_and_guess_server\obj\Debug\net6.0\ref\cue_and_guess_server.dll
