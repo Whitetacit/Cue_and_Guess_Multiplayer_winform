@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Project\\C#\\cue_and_guess\\cue_and_guess.csproj": {}
+    "D:\\Project\\C#\\Cue_and_Guess_Multiplayer_winform\\client\\cue_and_guess.csproj": {}
   },
   "projects": {
-    "D:\\Project\\C#\\cue_and_guess\\cue_and_guess.csproj": {
+    "D:\\Project\\C#\\Cue_and_Guess_Multiplayer_winform\\client\\cue_and_guess.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Project\\C#\\cue_and_guess\\cue_and_guess.csproj",
+        "projectUniqueName": "D:\\Project\\C#\\Cue_and_Guess_Multiplayer_winform\\client\\cue_and_guess.csproj",
         "projectName": "cue_and_guess",
-        "projectPath": "D:\\Project\\C#\\cue_and_guess\\cue_and_guess.csproj",
+        "projectPath": "D:\\Project\\C#\\Cue_and_Guess_Multiplayer_winform\\client\\cue_and_guess.csproj",
         "packagesPath": "C:\\Users\\leo\\.nuget\\packages\\",
-        "outputPath": "D:\\Project\\C#\\cue_and_guess\\obj\\",
+        "outputPath": "D:\\Project\\C#\\Cue_and_Guess_Multiplayer_winform\\client\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\leo\\AppData\\Roaming\\NuGet\\NuGet.Config",

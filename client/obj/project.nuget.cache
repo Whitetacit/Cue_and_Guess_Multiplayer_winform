@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Yjy8/UDj9Qz0FZqInQ72rXVFhLs7yoKWZSyKKUGpdyzn4IX/BpIkFqdThBoh6lUl3ezQeS60ceZTedHcoCgRbA==",
+  "dgSpecHash": "C2Oub01HnMlRx2FdZkbatRJByTtbU2jn1x8m2Ejctfq5AxSgPjm9yX6Ml6PPr/BCct7YJmP4otKY57S8u+hpFw==",
   "success": true,
-  "projectFilePath": "D:\\Project\\C#\\cue_and_guess\\cue_and_guess.csproj",
+  "projectFilePath": "D:\\Project\\C#\\Cue_and_Guess_Multiplayer_winform\\client\\cue_and_guess.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

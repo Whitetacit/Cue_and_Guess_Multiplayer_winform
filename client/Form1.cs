@@ -17,7 +17,7 @@ namespace cue_and_guess
         public static int connect_port = 6666;
         public static Socket client;
         public static bool is_connecting;
-        public static byte[] data = new byte[1024];
+        public static byte[] data = new byte[1024 * 1024 * 8];
 
 
         public Form1()
@@ -43,13 +43,21 @@ namespace cue_and_guess
             {
                 MessageBox.Show(ex.Message);
             }
+            try
+            {
+                send_message("username", "Mr'Nobody");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
-        static void send_message(string message)
+        static void send_message(string type, string message)
         {
             try
             {
-                string msg = message;
+                string msg = (type + ":" + message).ToString();
                 client.Send(Encoding.Default.GetBytes(msg));
 
             }
@@ -133,13 +141,22 @@ namespace cue_and_guess
         {
             message = textBox2.Text;
             textBox2.Text = null;
-            send_message(message);
+            send_message("message",message);
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            client.Send(Encoding.Default.GetBytes("close"));
-            client.Close();
+            try
+            {
+                client.Send(Encoding.Default.GetBytes("message:close"));
+                client.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            
         }
     }
 }

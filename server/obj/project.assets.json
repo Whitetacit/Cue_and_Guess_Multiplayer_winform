@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Project\\C#\\cue_and_guess_server\\cue_and_guess_server.csproj",
+      "projectUniqueName": "D:\\Project\\C#\\Cue_and_Guess_Multiplayer_winform\\server\\cue_and_guess_server.csproj",
       "projectName": "cue_and_guess_server",
-      "projectPath": "D:\\Project\\C#\\cue_and_guess_server\\cue_and_guess_server.csproj",
+      "projectPath": "D:\\Project\\C#\\Cue_and_Guess_Multiplayer_winform\\server\\cue_and_guess_server.csproj",
       "packagesPath": "C:\\Users\\leo\\.nuget\\packages\\",
-      "outputPath": "D:\\Project\\C#\\cue_and_guess_server\\obj\\",
+      "outputPath": "D:\\Project\\C#\\Cue_and_Guess_Multiplayer_winform\\server\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\leo\\AppData\\Roaming\\NuGet\\NuGet.Config",

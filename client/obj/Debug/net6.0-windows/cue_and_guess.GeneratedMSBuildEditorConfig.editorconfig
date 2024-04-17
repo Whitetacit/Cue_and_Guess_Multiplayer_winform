@@ -14,4 +14,4 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = cue_and_guess
-build_property.ProjectDir = D:\Project\C#\cue_and_guess\
+build_property.ProjectDir = D:\Project\C#\Cue_and_Guess_Multiplayer_winform\client\
