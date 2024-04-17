@@ -1,0 +1,17 @@
+D:\Project\C#\cue_and_guess\bin\Debug\net6.0-windows\cue_and_guess.exe
+D:\Project\C#\cue_and_guess\bin\Debug\net6.0-windows\cue_and_guess.deps.json
+D:\Project\C#\cue_and_guess\bin\Debug\net6.0-windows\cue_and_guess.runtimeconfig.json
+D:\Project\C#\cue_and_guess\bin\Debug\net6.0-windows\cue_and_guess.dll
+D:\Project\C#\cue_and_guess\bin\Debug\net6.0-windows\cue_and_guess.pdb
+D:\Project\C#\cue_and_guess\obj\Debug\net6.0-windows\cue_and_guess.csproj.AssemblyReference.cache
+D:\Project\C#\cue_and_guess\obj\Debug\net6.0-windows\cue_and_guess.Form1.resources
+D:\Project\C#\cue_and_guess\obj\Debug\net6.0-windows\cue_and_guess.csproj.GenerateResource.cache
+D:\Project\C#\cue_and_guess\obj\Debug\net6.0-windows\cue_and_guess.GeneratedMSBuildEditorConfig.editorconfig
+D:\Project\C#\cue_and_guess\obj\Debug\net6.0-windows\cue_and_guess.AssemblyInfoInputs.cache
+D:\Project\C#\cue_and_guess\obj\Debug\net6.0-windows\cue_and_guess.AssemblyInfo.cs
+D:\Project\C#\cue_and_guess\obj\Debug\net6.0-windows\cue_and_guess.csproj.CoreCompileInputs.cache
+D:\Project\C#\cue_and_guess\obj\Debug\net6.0-windows\cue_and_guess.dll
+D:\Project\C#\cue_and_guess\obj\Debug\net6.0-windows\refint\cue_and_guess.dll
+D:\Project\C#\cue_and_guess\obj\Debug\net6.0-windows\cue_and_guess.pdb
+D:\Project\C#\cue_and_guess\obj\Debug\net6.0-windows\cue_and_guess.genruntimeconfig.cache
+D:\Project\C#\cue_and_guess\obj\Debug\net6.0-windows\ref\cue_and_guess.dll
