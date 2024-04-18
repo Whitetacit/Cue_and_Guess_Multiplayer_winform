@@ -11,11 +11,13 @@ namespace cue_and_guess
         public static string message_text;
         public static List<string> message_list = new List<string>();
         public static int frequency;
+        public static char[] separator = { ':' };
+        public static bool textbox_has_text;
 
 
         public static string connect_ip = "127.0.0.1";
         public static int connect_port = 6666;
-        public static Socket client;
+        public static Socket client = null;
         public static bool is_connecting;
         public static byte[] data = new byte[1024 * 1024 * 8];
 
@@ -45,7 +47,7 @@ namespace cue_and_guess
             }
             try
             {
-                send_message("username", "Mr'Nobody");
+                send_message("username", "user");
             }
             catch (Exception ex)
             {
@@ -57,7 +59,7 @@ namespace cue_and_guess
         {
             try
             {
-                string msg = (type + ":" + message).ToString();
+                string msg = (type + ":" + message).ToString();//将数据类型和数据内容组合后发送
                 client.Send(Encoding.Default.GetBytes(msg));
 
             }
@@ -74,19 +76,32 @@ namespace cue_and_guess
                 while (true)
                 {
                     int length = client.Receive(data);
-                    string msg = Encoding.Default.GetString(data, 0, length);
-                    if (msg == null || msg.Length == 0)
+                    string message_dictionary = Encoding.Default.GetString(data, 0, length);
+                    string[] message = message_dictionary.Split(separator, 2);
+                    if (message_dictionary == null || message_dictionary.Length == 0)//判断是否断开连接
                     {
                         client.Close();
                         break;
                     }
                     else
                     {
-                        //返回主线程
-                        this.Invoke(new Action(() =>
+                        switch (message[0])//判断数据类型
                         {
-                            show_message(msg);
-                        }));
+                            case "message":
+                                //返回主线程
+                                this.Invoke(new Action(() =>
+                                {
+                                    show_message(message[1]);
+                                }));
+                                break;
+                            case "userlist":
+                                this.Invoke(new Action(() =>
+                                {
+                                    show_user_list(message[1]);
+                                }));
+                                break;
+                        }
+
 
                     }
                 }
@@ -94,6 +109,19 @@ namespace cue_and_guess
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        void show_user_list(string users)
+        {
+            string[] user_list = users.Split(new char[] { ',' });
+            listBox1.Items.Clear();
+            foreach (string user in user_list)
+            {
+                if (user.Length > 0)
+                {
+                    listBox1.Items.Add(user);
+                }
             }
         }
 
@@ -112,6 +140,13 @@ namespace cue_and_guess
             }
             textBox1.Text = message_text;
         }
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            textBox3.Text = "username";
+            textBox3.ForeColor = Color.Gray;
+            textbox_has_text = false;
+        }
+
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
@@ -141,7 +176,7 @@ namespace cue_and_guess
         {
             message = textBox2.Text;
             textBox2.Text = null;
-            send_message("message",message);
+            send_message("message", message);
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -156,7 +191,45 @@ namespace cue_and_guess
                 MessageBox.Show(ex.Message);
             }
 
-            
+
+        }
+
+
+        private void textBox3_Enter(object sender, EventArgs e)
+        {
+            if (textbox_has_text == false)
+            {
+                textBox3.Text = "";
+            }
+            textBox3.ForeColor = Color.Black;
+        }
+
+        private void textBox3_Leave(object sender, EventArgs e)
+        {
+            if (textBox3.Text == "")
+            {
+                textBox3.Text = "username";
+                textBox3.ForeColor = Color.Gray;
+                textbox_has_text = false;
+            }
+            else
+            {
+                textbox_has_text = true;
+            }
+        }
+
+        private void change_user_name_Click(object sender, EventArgs e)
+        {
+            message = textBox3.Text;
+            send_message("username", message);
+        }
+
+        private void textBox3_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                change_user_name_Click(sender, e);
+            }
         }
     }
 }

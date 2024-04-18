@@ -10,13 +10,19 @@ namespace cue_and_guess_server
     {
         public static string server_ip = "127.0.0.1";
         public static int server_port = 6666;
-        public static Socket server;
-        public static Socket client;
+        public static Socket server = null;
+        public static Socket client = null;
         public static byte[] data = new byte[1024 * 1024 * 8];
         public static string[] message = new string[2];
         public static char[] separator = { ':' };
-        public static Dictionary<string, Socket> clients_ip = new Dictionary<string, Socket>();
-        public static Dictionary<string, string> user_name = new Dictionary<string, string>();
+        public static Dictionary<string, Socket> clients_ip = new Dictionary<string, Socket> { };
+        public static Dictionary<string, string> user_name = new Dictionary<string, string> { };
+
+        public static bool is_game_start = false;
+        public static bool is_users_ready;
+        public static Dictionary<string, bool> user_ready = new Dictionary<string, bool>();
+        public static Dictionary<string, int> users_joined = new Dictionary<string, int> { };
+        public static List<string> user_joined_sort = new List<string>();
         static void Main(string[] args)
         {
             server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -27,18 +33,20 @@ namespace cue_and_guess_server
             {
                 try
                 {
-                    accept();
+                    accept(server);
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
                 }
             }).Start();
-        
+
+            
         }
 
-        static void accept() 
+        static void accept(object obj) 
         {
+            Socket server = (Socket)obj;
             while (true)
             {
                 //监听连接
@@ -47,13 +55,15 @@ namespace cue_and_guess_server
                 if (!clients_ip.ContainsKey(client_ip))
                 {
                     clients_ip.Add(client_ip, client);
-                    Console.WriteLine(client_ip);
+                    Console.WriteLine(client_ip + clients_ip[client_ip].RemoteEndPoint.ToString());
+                    user_ready.Add(client_ip, false);
+
                 }
                 new Thread(() =>
                 {
                     try
                     {
-                        Recieve();
+                        Recieve(client);
                     }
                     catch (Exception e)
                     {
@@ -72,10 +82,11 @@ namespace cue_and_guess_server
             user_name.Remove(client_ip);
             clients_ip.Remove(client_ip);
         }
-        static void Recieve()//接收消息
+        static void Recieve(object obj)//接收消息
         {
             while (true)
             {
+                Socket client = (Socket)obj;
                 try
                 {
                     string client_ip = client.RemoteEndPoint.ToString();
@@ -91,7 +102,7 @@ namespace cue_and_guess_server
                     
                     switch (message[0])//判断数据类型
                     {
-                        case "message":
+                        case "message"://消息
                             if (message[1] == "close")
                             {
                                 Console.WriteLine(client_ip + "断开连接");
@@ -99,12 +110,12 @@ namespace cue_and_guess_server
                             }
                             else
                             {
-                                Send(user_name[client_ip] + ": " + message[1]);
+                                Send("message", user_name[client_ip] + ": " + message[1]);
                                 Console.WriteLine("发送消息 ip:" + client_ip + " name:" + user_name[client_ip] + ": " + message[1]);
                             }
                             break;
 
-                        case "username":
+                        case "username"://用户名
                             if (user_name.ContainsKey(client_ip))
                             {
                                 user_name[client_ip] = message[1];
@@ -113,9 +124,29 @@ namespace cue_and_guess_server
                             {
                                 user_name.Add(client_ip, message[1]);
                             }
+                            string users_name = null;
+                            foreach (KeyValuePair<string, string> pair in user_name)
+                            {
+                                users_name += pair.Value + ",";
+                            }
+                            Console.WriteLine(users_name);
+                            Send("userlist", users_name);
+                            break;
+                        case "ready":
+                            if (is_game_start == false)
+                            {
+                                if (message[1] == "1")
+                                {
+                                    user_ready[client_ip] = true;
+                                }
+                                else
+                                {
+                                    user_ready[client_ip] = false;
+                                }
+                            }
                             break;
                     }
-                    if (message_dictionary == "message:close")
+                    if (message_dictionary == "message:close")//客户端主动关闭连接
                     {
                         close_client();
                         break;
@@ -127,15 +158,16 @@ namespace cue_and_guess_server
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
+                    break;
                 }
             }
         }
-        static void Send(string msg)//发送消息
+        static void Send(string type, string msg)//发送消息
         {
             try
             {
-                string message = msg;
-                foreach(Socket client in clients_ip.Values)
+                string message = type + ":" + msg;
+                foreach(Socket client in clients_ip.Values)//向每个用户发送信息
                 {
                     client.Send(Encoding.Default.GetBytes(message));
                 }
@@ -144,6 +176,53 @@ namespace cue_and_guess_server
             {
                 Console.WriteLine(e.Message);
             }
+        }
+        static void game_control(object obj)
+        {
+            while(true)
+            {
+                if (check_users_ready())
+                {
+                    Send("message", "游戏将在5秒后开始");
+                    //Thread.Sleep(5000);
+                    if (check_users_ready())//重复检测防止准备启动时有人加入
+                    {
+                        is_game_start = true;
+                    }
+                }
+                if (is_game_start == true)
+                {
+                    users_joined = null;
+                    foreach (var user in user_name)
+                    {
+                        users_joined.Add(user.Key, 0);
+                        user_joined_sort = random_list(users_joined);
+
+                    }
+
+                    
+                }
+            }
+        }
+
+        static bool check_users_ready()
+        {
+            foreach (var value in user_ready.Values)
+            {
+                if (value == false)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        static List<string> random_list(Dictionary<string, int> dictionary)
+        {
+            List<string> list = dictionary.Keys.ToList();
+            Random random = new Random();
+            list = list.OrderBy(k => random.Next()).ToList();
+            return list;
         }
     }
 }
