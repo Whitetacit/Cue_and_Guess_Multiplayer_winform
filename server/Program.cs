@@ -22,7 +22,8 @@ namespace cue_and_guess_server
         public static bool is_users_ready;
         public static Dictionary<string, bool> user_ready = new Dictionary<string, bool>();
         public static Dictionary<string, int> users_joined = new Dictionary<string, int> { };
-        public static List<string> user_joined_sort = new List<string>();
+        public static List<string> users_joined_sort = new List<string>();
+        public static string host_user = null;
         static void Main(string[] args)
         {
             server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -145,6 +146,12 @@ namespace cue_and_guess_server
                                 }
                             }
                             break;
+                        case "game":
+                            if (host_user.Contains(client_ip))
+                            {
+                                Send("game", message[1]);
+                            }
+                            break;
                     }
                     if (message_dictionary == "message:close")//客户端主动关闭连接
                     {
@@ -167,10 +174,24 @@ namespace cue_and_guess_server
             try
             {
                 string message = type + ":" + msg;
-                foreach(Socket client in clients_ip.Values)//向每个用户发送信息
+                if (type == "game")
                 {
-                    client.Send(Encoding.Default.GetBytes(message));
+                    foreach (Socket client in clients_ip.Values)//向每个用户发送信息
+                    {
+                        if (clients_ip.FirstOrDefault(x=> x.Value == client).Key != host_user)//不给房主发送提示信息
+                        {
+                            client.Send(Encoding.Default.GetBytes(message));
+                        }
+                    }
                 }
+                else
+                {
+                    foreach (Socket client in clients_ip.Values)//向每个用户发送信息
+                    {
+                        client.Send(Encoding.Default.GetBytes(message));
+                    }
+                }
+                
             }
             catch (Exception e)
             {
@@ -193,11 +214,20 @@ namespace cue_and_guess_server
                 if (is_game_start == true)
                 {
                     users_joined = null;
-                    foreach (var user in user_name)
+                    foreach (var user in user_name)//将已加入的玩家加入到游戏列表中
                     {
                         users_joined.Add(user.Key, 0);
-                        user_joined_sort = random_list(users_joined);
+                        users_joined_sort = random_list(users_joined);
 
+                    }
+                    users_joined_sort = random_list(users_joined);
+                    for (int i = 0; i < 2; i++)
+                    {
+                        foreach (string user in users_joined_sort)
+                        {
+                            host_user = user;
+
+                        }
                     }
 
                     
